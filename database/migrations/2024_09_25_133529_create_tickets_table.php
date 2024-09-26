@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tickets', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('user_id')->nullable();
+            $table->text('title')->nullable();
+            $table->longText('description')->nullable();
+            $table->enum('status', ['open', 'closed'])->default('open');
+            $table->json('attachments')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tickets');
+    }
+};
